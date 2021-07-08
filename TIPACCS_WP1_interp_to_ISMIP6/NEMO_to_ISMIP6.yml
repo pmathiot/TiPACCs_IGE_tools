@@ -1,0 +1,17 @@
+name: NEMO_to_ISMIP6
+channels:
+  - defaults
+dependencies:
+  - python=3.7
+  - netcdf4
+  - numpy
+  - cartopy
+  - scipy
+  - matplotlib
+  - xarray
+  - ipykernel
+  - pyproj
+  - dask
+  - gsw
+  - pandas
+prefix: /usr/local/anaconda3/envs/NEMO_to_ISMIP6

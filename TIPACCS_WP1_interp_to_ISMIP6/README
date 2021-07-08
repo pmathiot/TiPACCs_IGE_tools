@@ -1,0 +1,51 @@
+Period save: 1999-2008
+
+Files:
+Reference state is ISMIP6_eORCA025.L121-OPM021_y2029.10y_WP1_TiPACCs.nc
+Anomaly is ISMIP6_eORCA025.L121-OPM020_anomaly_y2029.10y_WP1_TiPACCs.nc
+
+Configuration:
+- model: NEMO based on v4.0.4
+- global configuration eORCA025 (1/4 degree resolution, ie ~ 10km at 60 S) see Mathiot et al. 2017 for details.
+- 121 z vertical levels with a resolution of 1m in surface, ~20m between 100m and 1000m depth and ~250m at 5000m depth.
+- bedmachine bathy on shelf
+- JRA55 atmospheric forcing
+- see https://pmathiot.github.io/NEMOCFG/docs/build/html/simu_eORCA025.html for complete description
+
+
+Reference = eORCA025.L121-OPM021
+
+eORCA025.L121-OPM020:
+   - colder west Antarctica shelf (wrt reference)
+   - warm west Ross shelf (wrt reference)
+
+Changes between simulations:
+
+eORCA025.L121-OPM021:
+   Oce:
+   - isopycnal diffusion: 150 m2/s2
+   - eddy induced diffusion: 150 m2/s2
+   - no AABW restoring
+   - Iceberg distribution follow the Stern et al. (2016) COMPOSITE distribution
+
+   Ice:
+   - ice-ocean drag: 5e-3
+   - thermal snow conductivity: 0.35 W/m/K
+   - no frazil ice
+   - no adaptative EVP rheology
+   => comments: it helps a lot to produce saltier HSSW
+
+   Simulation:
+   - start in 1979
+   - cycle back to 1979 after end of 2018.
+
+
+eORCA025.L121-OPM020 (change wrt to eORCA025.L121-OPM021):
+   Oce:
+   - Iceberg distribution follow the Marsh et al. (2015)
+
+   Ice:
+   - ice-ocean drag: 1e-2
+   - thermal snow conductivity: 0.31 W/m/K
+   - frazil ice
+   - adaptative EVP rheology
