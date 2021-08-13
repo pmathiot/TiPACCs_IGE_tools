@@ -3,7 +3,7 @@
 
 # In[1]:
 
-
+print('import modules ...')
 import xarray as xr
 import numpy  as np
 import pandas as pd
@@ -12,30 +12,40 @@ import calendar
 import copy
 import argparse
 
+print('end import modules ...')
+
 def get_argument():
-# define argument
+    # define argument
     parser = argparse.ArgumentParser()
-    parser.add_argument("-year_s", metavar='start year YYYY', help="start year", type=int, nargs=1, required=True)
-    parser.add_argument("-year_e", metavar='end   year YYYY', help="end   year", type=int, nargs=1, required=True)
-    parser.add_argument("-file_ext", metavar='file extension', help="file extension 20602100-19792019 or 21602200-19792019", \
+    parser.add_argument("--years", metavar='start year YYYY', help="start year", type=int, nargs=1, required=True)
+    parser.add_argument("--yeare", metavar='end year YYYY', help="end year", type=int, nargs=1, required=True)
+    parser.add_argument("--fileext", metavar='file extension', help="file extension 20602100-19792019 or 21602200-19792019", \
                                      type=str, nargs=1, required=True)
     return parser.parse_args()
+
+args = get_argument()
 
 # data dir path
 cdir='./'
 
 # list of file variables to process and the corresponding infile variables
-fvarlst_ano=['Q_1_5M','LW_TOTAL_DOWNWARD_SURFACE','P_SURF','SW_TOTAL_DOWNWARD_SURFACE','TOTAL_PRECIP','T_AIR_1_5M','U_10M','V_10M']
-cvarlst_ano=['dq'    ,'dilr'                     ,'dp'    ,'dfield203'                ,'dprecip'     ,'dtemp'     ,'du'   ,   'dv']
+#fvarlst_ano=['SNOW' ,'Q_1_5M','LW_TOTAL_DOWNWARD_SURFACE','P_SURF','SW_TOTAL_DOWNWARD_SURFACE','TOTAL_PRECIP','T_AIR_1_5M','U_10M','V_10M']
+#cvarlst_ano=['dsnow','dq'    ,'dilr'                     ,'dp'    ,'dfield203'                ,'dprecip'     ,'dtemp'     ,'du'   ,   'dv']
+#
+#fvarlst_JRA=['prsn', 'huss'  ,'rlds'                     ,'psl'   ,'rsds'                     ,'tprecip'     ,'tas'       ,'uas'  ,'vas'  ]
+#cvarlst_JRA=['prsn', 'huss'  ,'rlds'                     ,'psl'   ,'rsds'                     ,'tprecip'     ,'tas'       ,'uas'  ,'vas'  ]
 
-fvarlst_JRA=['huss'  ,'rlds'                     ,'psl'   ,'rsds'                     ,'tprecip'     ,'ts'        ,'uas'  ,'vas']
-cvarlst_JRA=['huss'  ,'rlds'                     ,'psl'   ,'rsds'                     ,'tprecip'     ,'ts'        ,'uas'  ,'vas']
+fvarlst_ano=['T_AIR_1_5M']
+cvarlst_ano=['dtemp'     ]
+
+fvarlst_JRA=['tas']
+cvarlst_JRA=['tas']
 
 # input file name extension
-cfin_ext=args.file_ext[0]
+cfin_ext=args.fileext[0]
 
-yJRAs=args.year_s[0]
-yJRAe=args.year_e[0]
+yJRAs=args.years[0]
+yJRAe=args.yeare[0]
 
 
 # ## Add HadCM3 anomaly data to JRA data
@@ -43,18 +53,20 @@ yJRAe=args.year_e[0]
 # In[3]:
 
 
-for ivar,fvar in enumerate(fvarlst_ano):
+for ivar,fvar in enumerate(fvarlst_ano[0:1]):
     cvar_ano=cvarlst_ano[ivar]
     cvar_JRA=cvarlst_JRA[ivar]
 
-    # load data anomaly
-    print('    load HadCM3 data ...')
-    cfin_ano='./A1B_{}_3h_ano_{}_on_JRA_grid.NC'.format(fvar,cfin_ext)
-    print('        file : {}'.format(cfin_ano))
-    ds_ano = xr.open_dataset('./DATA_out/'+cfin_ano)
-    
+   
     for year in range(yJRAs,yJRAe+1):
         year_out=year
+        print('YEAR = ',year)
+        print(datetime.now())
+        # load data anomaly
+        print('    load HadCM3 data ...')
+        cfin_ano='./A1B_{}_3h_ano_{}_on_JRA_grid.NC'.format(fvar,cfin_ext)
+        print('        file : {}'.format(cfin_ano))
+        ds_ano = xr.open_dataset('./DATA_out/'+cfin_ano)
         
         # load JRA data
         print('    load JRA data '+str(year)+' ...')
@@ -93,3 +105,4 @@ for ivar,fvar in enumerate(fvarlst_ano):
         print()
         print()
 
+print('DONE')

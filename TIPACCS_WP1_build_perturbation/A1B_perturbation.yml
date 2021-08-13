@@ -1,6 +1,12 @@
-name: A1B_perturbation
+name: test_A1B_perturbation
 channels:
   - defaults
 dependencies:
   - python=3.7
+  - ipykernel
+  - numpy
+  - xarray
+  - scipy
+  - matplotlib
+  - netcdf4
 prefix: /usr/local/anaconda3/envs/A1B_perturbation
