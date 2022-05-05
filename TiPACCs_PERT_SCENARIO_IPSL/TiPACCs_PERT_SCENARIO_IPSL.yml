@@ -1,0 +1,12 @@
+name: TiPACCs_PERT_SCENARIO_IPSL
+channels:
+  - defaults
+dependencies:
+  - python=3.7
+  - ipykernel
+  - numpy
+  - xarray
+  - scipy
+  - matplotlib
+  - netcdf4
+prefix: /usr/local/anaconda3/envs/TiPACCs_PERT_SCENARIO_IPSL
